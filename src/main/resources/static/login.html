@@ -3,23 +3,48 @@
 <head>
     <meta charset="UTF-8">
     <title>登录</title>
-    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.slim.js"></script>
+    <script src="https://cdn.bootcss.com/jquery/3.3.0/jquery.js"></script>
 </head>
 <body>
+<div><h2>登录就能访问<a href="/index">index</a>页面</h2></div>
 <div>
     <p>用户名是：admin，密码是：123456</p>
 </div>
-<div>
+<div id="login">
     用户名:<input type="text" name="username">
     密码:<input type="text" name="password">
     <button id="submit">登录</button>
 </div>
+<div id="success" style="display: none">
+    <p></p>
+    <button id="index">点击访问index</button>
+</div>
 <script>
+    var toker = null;
     $(function () {
-        $("#submit").onclick(function () {
-            var username = $("input username").val();
-            var password = $("input password").val();
-            alert(username+password);
+        $("#submit").click(function () {
+            var username = $("input[name='username']").val();
+            var password = $("input[name='password']").val();
+            console.log(username,password);
+            $.ajax({
+                type: "POST",
+                url: "/doLogin",
+                contentType: "application/json",
+                dataType: "json",
+                data: JSON.stringify({ "username": username,"password":password }),
+                success: function (jsonResult) {
+                    $("#login").css("display","none");
+                    $("#success").css("display","block");
+                    $("#success").find("p").text(JSON.stringify(jsonResult));
+                    toker = jsonResult.token;
+                    alert(JSON.stringify(jsonResult));
+                }
+            });
+
+        });
+
+        $("#index").click(function(){
+            window.location.href="/index?token="+toker;
         });
     });
 </script>
