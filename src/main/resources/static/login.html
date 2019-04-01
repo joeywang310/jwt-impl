@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>登录</title>
+    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.slim.js"></script>
+</head>
+<body>
+<div>
+    <p>用户名是：admin，密码是：123456</p>
+</div>
+<div>
+    用户名:<input type="text" name="username">
+    密码:<input type="text" name="password">
+    <button id="submit">登录</button>
+</div>
+<script>
+    $(function () {
+        $("#submit").onclick(function () {
+            var username = $("input username").val();
+            var password = $("input password").val();
+            alert(username+password);
+        });
+    });
+</script>
+</body>
+</html>
